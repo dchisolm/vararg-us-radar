@@ -35,43 +35,19 @@
     <div id="map"></div>
     <script>
 
-
-        let bbox = [[
-            -130.0,
-            55.0
-        ],
-        [
-            -130.0,
-            20.0026826
-        ],
-        [
-            -59.9967935,
-            20.0026826
-        ],
-        [
-            -59.9967935,
-            55.0
-        ],
-        [
-            -130.0,
-            55.0
-        ]];
-
-
         let bounds = [
             [20.0026826, -130.0], // bottom left
             [55.0, -59.9967935] // top right
         ];
-        const map = L.map('map').fitBounds(bounds);
 
+        const map = L.map('map').fitBounds(bounds);
         const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
         map.whenReady(function () {
-            // L.rectangle(bounds, { color: "#ff7800", weight: 1 }).addTo(map);
-            L.imageOverlay('./latest.png', bounds).addTo(map);
+            L.imageOverlay('./latest.png', bounds, {opacity: 0.5}).addTo(map);
         });
 
     </script>
