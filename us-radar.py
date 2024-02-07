@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import json
-from pprint import pprint
 from osgeo import gdal, gdalconst
 
 # https://mrms.nssl.noaa.gov/
@@ -15,19 +14,15 @@ def main():
 
     ds = gdal.Open(f'/vsigzip//vsicurl/{source_url}')
     gdal.Warp('/vsimem/reprojected.tiff', dstSRS='EPSG:3857', srcDSOrSrcDSTab=ds, resampleAlg=gdalconst.GRA_Average)
-    meta = ds.GetRasterBand(1).GetMetadata()
 
     ds = gdal.Open('/vsimem/reprojected.tiff')
     gdal.DEMProcessing('./latest.png', ds, 'color-relief', colorFilename="./radar_ramp.txt", format="png", addAlpha="true")
-    # pprint(gdal.Info(ds))
+   
     info = gdal.Info(ds, format='json')
-    
     print(json.dumps(info["wgs84Extent"], indent=2))
     gdal.Unlink('/vsimem/reprojected.tiff')
     
     ds = None
-
-    # pprint(meta);
 
 if __name__ == '__main__':
     main()
