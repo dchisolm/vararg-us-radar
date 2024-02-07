@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Example MRMS Composite Reflectivity</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div id="map"></div>
+    <script>
+
+
+        let bbox = [[
+            -130.0,
+            55.0
+        ],
+        [
+            -130.0,
+            20.0026826
+        ],
+        [
+            -59.9967935,
+            20.0026826
+        ],
+        [
+            -59.9967935,
+            55.0
+        ],
+        [
+            -130.0,
+            55.0
+        ]];
+
+
+        let bounds = [
+            [20.0026826, -130.0], // bottom left
+            [55.0, -59.9967935] // top right
+        ];
+        const map = L.map('map').fitBounds(bounds);
+
+        const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        map.whenReady(function () {
+            // L.rectangle(bounds, { color: "#ff7800", weight: 1 }).addTo(map);
+            L.imageOverlay('./latest.png', bounds).addTo(map);
+        });
+
+    </script>
+
+
+
+</body>
+
+</html>
